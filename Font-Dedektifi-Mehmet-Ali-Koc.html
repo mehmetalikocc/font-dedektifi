@@ -1,0 +1,2952 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Font Dedektifi</title>
+
+  <!-- GOOGLE FONTS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=
+  Abril+Fatface&
+  Bebas+Neue&
+  Bungee&
+  Caveat:wght@400;700&
+  Cinzel:wght@400;700&
+  DM+Sans:wght@400;700&
+  Fira+Mono:wght@400;700&
+  Inter:wght@400;700&
+  Lato:wght@400;700&
+  Libre+Baskerville:wght@400;700&
+  Lobster&
+  Merriweather:wght@400;700&
+  Montserrat:wght@400;700&
+  Nunito:wght@400;700&
+  Open+Sans:wght@400;700&
+  Oswald:wght@400;700&
+  Pacifico&
+  Playfair+Display:wght@400;700&
+  Poppins:wght@400;700&
+  Raleway:wght@400;700&
+  Roboto:wght@400;700&
+  Roboto+Slab:wght@400;700&
+  Source+Sans+3:wght@400;700&
+  Space+Mono:wght@400;700&
+  Ubuntu:wght@400;700
+  &display=swap" rel="stylesheet">
+
+  <style>
+
+    /* =====================================================
+       ROOT
+    ===================================================== */
+
+    :root {
+
+      --bg: #0c0c0e;
+
+      --panel: #141416;
+      --panel-2: #1b1b1f;
+
+      --border: #29292e;
+
+      --text: #f5f5f7;
+      --muted: #888891;
+
+      --accent: #ed0f36;
+
+      --accent-soft:
+        rgba(237, 15, 54, 0.12);
+
+      --green: #42d889;
+
+      --green-soft:
+        rgba(66, 216, 137, 0.12);
+
+      --red: #ff4d62;
+
+      --red-soft:
+        rgba(255, 77, 98, 0.12);
+
+    }
+
+
+    /* =====================================================
+       RESET
+    ===================================================== */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+
+    body {
+
+      min-height: 100vh;
+
+      background:
+
+        radial-gradient(
+          circle at 50% 0%,
+          #1c1c21 0%,
+          transparent 38%
+        ),
+
+        var(--bg);
+
+      color: var(--text);
+
+      font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      padding: 30px 20px;
+
+    }
+
+
+    button {
+      font: inherit;
+    }
+
+
+    .game {
+
+      width: min(
+        920px,
+        100%
+      );
+
+    }
+
+
+    /* =====================================================
+       HEADER
+    ===================================================== */
+
+    .topbar {
+
+      display: flex;
+
+      justify-content:
+        space-between;
+
+      align-items: center;
+
+      gap: 20px;
+
+      margin-bottom: 18px;
+
+    }
+
+
+    .brand {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 12px;
+
+    }
+
+
+    .brand-icon {
+
+      width: 42px;
+
+      height: 42px;
+
+      border-radius: 12px;
+
+      display: grid;
+
+      place-items: center;
+
+      background:
+        var(--accent);
+
+      font-size: 18px;
+
+      font-weight: 800;
+
+      box-shadow:
+        0 8px 30px
+        rgba(237, 15, 54, .22);
+
+    }
+
+
+    .brand h1 {
+
+      font-size: 17px;
+
+      letter-spacing: .08em;
+
+      text-transform: uppercase;
+
+    }
+
+
+    .brand p {
+
+      color: var(--muted);
+
+      font-size: 12px;
+
+      margin-top: 3px;
+
+    }
+
+
+    /* =====================================================
+       STATS
+    ===================================================== */
+
+    .stats {
+
+      display: flex;
+
+      gap: 10px;
+
+    }
+
+
+    .stat {
+
+      min-width: 96px;
+
+      background:
+        rgba(255,255,255,.035);
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 14px;
+
+      padding: 10px 14px;
+
+    }
+
+
+    .stat-label {
+
+      font-size: 10px;
+
+      text-transform: uppercase;
+
+      letter-spacing: .12em;
+
+      color: var(--muted);
+
+      margin-bottom: 5px;
+
+    }
+
+
+    .stat-value {
+
+      font-size: 17px;
+
+      font-weight: 700;
+
+    }
+
+
+    .hearts {
+
+      letter-spacing: 3px;
+
+      color: var(--accent);
+
+    }
+
+
+    /* =====================================================
+       MAIN CARD
+    ===================================================== */
+
+    .card {
+
+      position: relative;
+
+      overflow: hidden;
+
+      background:
+        rgba(20,20,22,.92);
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 24px;
+
+      padding: 32px;
+
+      box-shadow:
+        0 30px 80px
+        rgba(0,0,0,.3);
+
+    }
+
+
+    .card::before {
+
+      content: "";
+
+      position: absolute;
+
+      top: 0;
+
+      left: 32px;
+
+      right: 32px;
+
+      height: 1px;
+
+      background:
+
+        linear-gradient(
+          90deg,
+          transparent,
+          rgba(255,255,255,.2),
+          transparent
+        );
+
+    }
+
+
+    /* =====================================================
+       QUESTION HEADER
+    ===================================================== */
+
+    .question-meta {
+
+      display: flex;
+
+      justify-content:
+        space-between;
+
+      align-items: center;
+
+      margin-bottom: 28px;
+
+      color: var(--muted);
+
+      font-size: 12px;
+
+      text-transform: uppercase;
+
+      letter-spacing: .1em;
+
+    }
+
+
+    .round {
+
+      color: var(--accent);
+
+    }
+
+
+    /* =====================================================
+       FONT PREVIEW
+    ===================================================== */
+
+    .font-preview {
+
+      min-height: 220px;
+
+      border:
+        1px solid var(--border);
+
+      background:
+
+        linear-gradient(
+          135deg,
+          rgba(255,255,255,.025),
+          transparent
+        ),
+
+        #101012;
+
+      border-radius: 18px;
+
+      display: flex;
+
+      flex-direction: column;
+
+      justify-content: center;
+
+      padding: 35px;
+
+      position: relative;
+
+      overflow: hidden;
+
+    }
+
+
+    .preview-label {
+
+      position: absolute;
+
+      top: 18px;
+
+      left: 20px;
+
+      font-family:
+        Inter,
+        sans-serif;
+
+      font-size: 10px;
+
+      color: #66666e;
+
+      text-transform: uppercase;
+
+      letter-spacing: .15em;
+
+    }
+
+
+    #sampleText {
+
+      font-size:
+        clamp(
+          32px,
+          5vw,
+          54px
+        );
+
+      line-height: 1.12;
+
+      text-align: center;
+
+      transition:
+        opacity .25s ease;
+
+    }
+
+
+    .alphabet {
+
+      margin-top: 18px;
+
+      text-align: center;
+
+      font-size: 15px;
+
+      color: #65656d;
+
+    }
+
+
+    /* =====================================================
+       SECTION TITLE
+    ===================================================== */
+
+    .section-title {
+
+      font-size: 11px;
+
+      text-transform: uppercase;
+
+      letter-spacing: .14em;
+
+      color: var(--muted);
+
+      margin:
+        28px 0 12px;
+
+    }
+
+
+    /* =====================================================
+       HINTS
+    ===================================================== */
+
+    .hints {
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(2, 1fr);
+
+      gap: 10px;
+
+    }
+
+
+    .hint {
+
+      min-height: 78px;
+
+      border-radius: 14px;
+
+      border:
+        1px solid var(--border);
+
+      background:
+        var(--panel-2);
+
+      color: #b6b6bc;
+
+      padding: 15px;
+
+      cursor: pointer;
+
+      transition:
+        .2s ease;
+
+      text-align: left;
+
+    }
+
+
+    .hint:hover:not(:disabled) {
+
+      border-color: #44444b;
+
+      transform:
+        translateY(-2px);
+
+    }
+
+
+    .hint-number {
+
+      display: block;
+
+      font-size: 10px;
+
+      color: var(--accent);
+
+      letter-spacing: .12em;
+
+      text-transform: uppercase;
+
+      margin-bottom: 6px;
+
+    }
+
+
+    .hint-text {
+
+      font-size: 13px;
+
+      line-height: 1.4;
+
+    }
+
+
+    .hint.revealed {
+
+      background:
+        var(--accent-soft);
+
+      border-color:
+        rgba(237,15,54,.35);
+
+    }
+
+
+    /* =====================================================
+       OPTIONS
+    ===================================================== */
+
+    .options {
+
+      display: grid;
+
+      grid-template-columns:
+        1fr 1fr;
+
+      gap: 10px;
+
+    }
+
+
+    .option {
+
+      position: relative;
+
+      min-height: 62px;
+
+      background:
+        var(--panel-2);
+
+      color:
+        var(--text);
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 14px;
+
+      cursor: pointer;
+
+      padding: 15px 18px;
+
+      text-align: left;
+
+      font-weight: 600;
+
+      transition:
+        .18s ease;
+
+    }
+
+
+    .option:hover:not(:disabled) {
+
+      background:
+        #222227;
+
+      border-color:
+        #45454c;
+
+      transform:
+        translateY(-2px);
+
+    }
+
+
+    .option.correct {
+
+      background:
+        var(--green-soft);
+
+      border-color:
+        var(--green);
+
+      color:
+        var(--green);
+
+    }
+
+
+    .option.wrong {
+
+      background:
+        var(--red-soft);
+
+      border-color:
+        var(--red);
+
+      color:
+        var(--red);
+
+      animation:
+        shake .3s ease;
+
+    }
+
+
+    @keyframes shake {
+
+      0%,
+      100% {
+
+        transform:
+          translateX(0);
+
+      }
+
+
+      25% {
+
+        transform:
+          translateX(-5px);
+
+      }
+
+
+      75% {
+
+        transform:
+          translateX(5px);
+
+      }
+
+    }
+
+
+    /* =====================================================
+       FEEDBACK
+    ===================================================== */
+
+    .feedback {
+
+      min-height: 50px;
+
+      margin-top: 20px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      text-align: center;
+
+      font-size: 14px;
+
+    }
+
+
+    .feedback.success {
+
+      color:
+        var(--green);
+
+    }
+
+
+    .feedback.error {
+
+      color:
+        var(--red);
+
+    }
+
+
+    /* =====================================================
+       PROGRESS
+    ===================================================== */
+
+    .progress-area {
+
+      margin-top: 18px;
+
+    }
+
+
+    .progress-info {
+
+      display: flex;
+
+      justify-content:
+        space-between;
+
+      margin-bottom: 8px;
+
+      font-size: 10px;
+
+      text-transform: uppercase;
+
+      letter-spacing: .1em;
+
+      color: var(--muted);
+
+    }
+
+
+    .progress-wrap {
+
+      height: 4px;
+
+      background: #202024;
+
+      border-radius: 100px;
+
+      overflow: hidden;
+
+    }
+
+
+    .progress {
+
+      width: 10%;
+
+      height: 100%;
+
+      background:
+        var(--accent);
+
+      border-radius: inherit;
+
+      transition:
+        width .35s ease;
+
+    }
+
+
+    /* =====================================================
+       RESULT SCREEN
+    ===================================================== */
+
+    .game-over {
+
+      display: none;
+
+      min-height: 560px;
+
+      text-align: center;
+
+      align-items: center;
+
+      justify-content: center;
+
+      flex-direction: column;
+
+    }
+
+
+    .game-over.active {
+
+      display: flex;
+
+    }
+
+
+    .game-over-icon {
+
+      width: 74px;
+
+      height: 74px;
+
+      display: grid;
+
+      place-items: center;
+
+      border-radius: 22px;
+
+      background:
+        var(--accent-soft);
+
+      border:
+        1px solid
+        rgba(237,15,54,.3);
+
+      font-size: 32px;
+
+      margin-bottom: 24px;
+
+    }
+
+
+    .game-over h2 {
+
+      font-size: 36px;
+
+      margin-bottom: 10px;
+
+    }
+
+
+    .game-over p {
+
+      color: var(--muted);
+
+      line-height: 1.6;
+
+      max-width: 460px;
+
+    }
+
+
+    .final-score {
+
+      font-size: 52px;
+
+      font-weight: 800;
+
+      margin:
+        28px 0 4px;
+
+    }
+
+
+    .score-caption {
+
+      color: var(--muted);
+
+      font-size: 12px;
+
+      text-transform: uppercase;
+
+      letter-spacing: .15em;
+
+    }
+
+
+    .result-stats {
+
+      display: flex;
+
+      gap: 10px;
+
+      margin:
+        28px 0 30px;
+
+    }
+
+
+    .result-stat {
+
+      min-width: 120px;
+
+      background:
+        var(--panel-2);
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 14px;
+
+      padding: 15px;
+
+    }
+
+
+    .result-stat strong {
+
+      display: block;
+
+      font-size: 22px;
+
+      margin-bottom: 5px;
+
+    }
+
+
+    .result-stat span {
+
+      font-size: 10px;
+
+      color: var(--muted);
+
+      text-transform: uppercase;
+
+      letter-spacing: .1em;
+
+    }
+
+
+    .restart {
+
+      border: 0;
+
+      border-radius: 14px;
+
+      padding: 15px 26px;
+
+      background:
+        var(--accent);
+
+      color: white;
+
+      cursor: pointer;
+
+      font-weight: 700;
+
+      transition:
+        .2s ease;
+
+    }
+
+
+    .restart:hover {
+
+      transform:
+        translateY(-2px);
+
+      box-shadow:
+        0 10px 30px
+        rgba(237,15,54,.25);
+
+    }
+
+
+    .hidden {
+
+      display:
+        none !important;
+
+    }
+
+
+    /* =====================================================
+       MOBILE
+    ===================================================== */
+
+    @media
+    (max-width: 700px) {
+
+      body {
+
+        padding:
+          18px 14px;
+
+        align-items:
+          flex-start;
+
+      }
+
+
+      .topbar {
+
+        align-items:
+          flex-start;
+
+        flex-direction:
+          column;
+
+      }
+
+
+      .stats {
+
+        width: 100%;
+
+      }
+
+
+      .stat {
+
+        flex: 1;
+
+      }
+
+
+      .card {
+
+        padding: 20px;
+
+        border-radius: 20px;
+
+      }
+
+
+      .font-preview {
+
+        min-height: 190px;
+
+        padding:
+          45px 20px 25px;
+
+      }
+
+
+      .hints {
+
+        grid-template-columns:
+          1fr;
+
+      }
+
+
+      .options {
+
+        grid-template-columns:
+          1fr;
+
+      }
+
+
+      .result-stats {
+
+        width: 100%;
+
+      }
+
+
+      .result-stat {
+
+        flex: 1;
+
+        min-width: 0;
+
+      }
+
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+
+<div class="game">
+
+
+  <!-- ===================================================
+       HEADER
+  ==================================================== -->
+
+  <header class="topbar">
+
+
+    <div class="brand">
+
+      <div class="brand-icon">
+        Aa
+      </div>
+
+
+      <div>
+
+        <h1>
+          Font Dedektifi
+        </h1>
+
+        <p>
+          Tipografiyi ne kadar iyi tanıyorsun?
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="stats">
+
+
+      <div class="stat">
+
+        <div class="stat-label">
+          Skor
+        </div>
+
+        <div
+          class="stat-value"
+          id="score">
+          0
+        </div>
+
+      </div>
+
+
+      <div class="stat">
+
+        <div class="stat-label">
+          Can
+        </div>
+
+        <div
+          class="stat-value hearts"
+          id="lives">
+          ♥ ♥ ♥
+        </div>
+
+      </div>
+
+
+    </div>
+
+  </header>
+
+
+  <!-- ===================================================
+       MAIN CARD
+  ==================================================== -->
+
+  <main class="card">
+
+
+    <!-- =================================================
+         GAME SCREEN
+    ================================================== -->
+
+    <div id="gameScreen">
+
+
+      <div class="question-meta">
+
+        <span
+          class="round"
+          id="round">
+
+          Font Dosyası #01
+
+        </span>
+
+
+        <span>
+
+          Bu font hangisi?
+
+        </span>
+
+      </div>
+
+
+      <!-- ===============================================
+           FONT PREVIEW
+      ================================================ -->
+
+      <div class="font-preview">
+
+
+        <div class="preview-label">
+
+          Şüpheli font örneği
+
+        </div>
+
+
+        <div id="sampleText">
+
+          Font Dedektifi Görev Başında
+
+        </div>
+
+
+        <div
+          class="alphabet"
+          id="alphabet">
+
+          Aa Bb Cc Dd Ee Ff Gg Rr 123
+
+        </div>
+
+
+      </div>
+
+
+      <!-- ===============================================
+           HINTS
+      ================================================ -->
+
+      <div class="section-title">
+
+        İpuçları
+
+      </div>
+
+
+      <div class="hints">
+
+
+        <button
+          class="hint"
+          data-hint="0">
+
+
+          <span class="hint-number">
+
+            İpucu 01
+
+          </span>
+
+
+          <span class="hint-text">
+
+            Font ailesini göster
+
+          </span>
+
+
+        </button>
+
+
+        <button
+          class="hint"
+          data-hint="1">
+
+
+          <span class="hint-number">
+
+            İpucu 02
+
+          </span>
+
+
+          <span class="hint-text">
+
+            Tasarım detayını göster
+
+          </span>
+
+
+        </button>
+
+
+      </div>
+
+
+      <!-- ===============================================
+           OPTIONS
+      ================================================ -->
+
+      <div class="section-title">
+
+        Şüpheliler
+
+      </div>
+
+
+      <div
+        class="options"
+        id="options">
+      </div>
+
+
+      <!-- ===============================================
+           FEEDBACK
+      ================================================ -->
+
+      <div
+        class="feedback"
+        id="feedback">
+      </div>
+
+
+      <!-- ===============================================
+           PROGRESS
+      ================================================ -->
+
+      <div class="progress-area">
+
+
+        <div class="progress-info">
+
+          <span>
+            Soru ilerlemesi
+          </span>
+
+          <span id="progressText">
+            1 / 10
+          </span>
+
+        </div>
+
+
+        <div class="progress-wrap">
+
+          <div
+            class="progress"
+            id="progress">
+          </div>
+
+        </div>
+
+
+      </div>
+
+
+    </div>
+
+
+    <!-- =================================================
+         RESULT SCREEN
+    ================================================== -->
+
+    <div
+      class="game-over"
+      id="gameOver">
+
+
+      <div
+        class="game-over-icon"
+        id="resultIcon">
+
+        🔎
+
+      </div>
+
+
+      <h2 id="resultTitle">
+
+        Dosya Kapandı.
+
+      </h2>
+
+
+      <p id="resultMessage">
+
+        10 font dosyasını tamamladın.
+        Tipografi gözünün ne kadar güçlü olduğunu
+        aşağıdaki skor gösteriyor.
+
+      </p>
+
+
+      <div
+        class="final-score"
+        id="finalScore">
+
+        0
+
+      </div>
+
+
+      <div class="score-caption">
+
+        Toplam Puan
+
+      </div>
+
+
+      <div class="result-stats">
+
+
+        <div class="result-stat">
+
+          <strong id="correctResult">
+            0
+          </strong>
+
+          <span>
+            Doğru
+          </span>
+
+        </div>
+
+
+        <div class="result-stat">
+
+          <strong id="wrongResult">
+            0
+          </strong>
+
+          <span>
+            Yanlış
+          </span>
+
+        </div>
+
+
+        <div class="result-stat">
+
+          <strong id="accuracyResult">
+            %0
+          </strong>
+
+          <span>
+            Başarı
+          </span>
+
+        </div>
+
+
+      </div>
+
+
+      <button
+        class="restart"
+        id="restart">
+
+        Yeniden Oyna
+
+      </button>
+
+
+    </div>
+
+
+  </main>
+
+
+</div>
+
+
+
+<script>
+
+/* =====================================================
+   OYUN AYARLARI
+===================================================== */
+
+const TOTAL_QUESTIONS = 10;
+
+const MAX_LIVES = 3;
+
+
+/* =====================================================
+   30 FONTLUK ARŞİV
+===================================================== */
+
+const fonts = [
+
+  /* 01 */
+
+  {
+    name: "Helvetica",
+
+    family:
+      "Helvetica, Arial, sans-serif",
+
+    type:
+      "Neo-grotesk Sans-serif",
+
+    detail:
+      "1957'de İsviçre'de geliştirildi. Nötr, temiz ve modernist karakteriyle grafik tasarım tarihinin en ikonik fontlarından biridir."
+  },
+
+
+  /* 02 */
+
+  {
+    name: "Arial",
+
+    family:
+      "Arial, sans-serif",
+
+    type:
+      "Sans-serif",
+
+    detail:
+      "1982'de Robin Nicholas ve Patricia Saunders tarafından tasarlandı. Helvetica'ya benzer yapısıyla bilgisayarlarda çok yaygınlaştı."
+  },
+
+
+  /* 03 */
+
+  {
+    name: "Times New Roman",
+
+    family:
+      "'Times New Roman', Times, serif",
+
+    type:
+      "Serif",
+
+    detail:
+      "1930'larda The Times gazetesi için geliştirildi. Dar harf yapısı sayesinde gazete sütunlarında daha fazla metin kullanılmasına yardımcı olur."
+  },
+
+
+  /* 04 */
+
+  {
+    name: "Comic Sans",
+
+    family:
+      "'Comic Sans MS', cursive",
+
+    type:
+      "Casual Sans-serif",
+
+    detail:
+      "1994'te Vincent Connare tarafından çizgi roman konuşma balonlarından esinlenerek tasarlandı."
+  },
+
+
+  /* 05 */
+
+  {
+    name: "Courier New",
+
+    family:
+      "'Courier New', Courier, monospace",
+
+    type:
+      "Monospace",
+
+    detail:
+      "Daktilo estetiğini taşır. Her karakter aynı yatay genişliği kullanır ve kod görünümünü çağrıştırır."
+  },
+
+
+  /* 06 */
+
+  {
+    name: "Impact",
+
+    family:
+      "Impact, Haettenschweiler, sans-serif",
+
+    type:
+      "Display Sans-serif",
+
+    detail:
+      "1965'te Geoffrey Lee tarafından tasarlandı. Çok kalın ve sıkışık harfleri nedeniyle başlıklarda ve internet meme kültüründe ünlüdür."
+  },
+
+
+  /* 07 */
+
+  {
+    name: "Roboto",
+
+    family:
+      "'Roboto', sans-serif",
+
+    type:
+      "Neo-grotesk Sans-serif",
+
+    detail:
+      "Christian Robertson tarafından Google için geliştirildi ve 2011'de Android'in temel yazı karakterlerinden biri oldu."
+  },
+
+
+  /* 08 */
+
+  {
+    name: "Montserrat",
+
+    family:
+      "'Montserrat', sans-serif",
+
+    type:
+      "Geometrik Sans-serif",
+
+    detail:
+      "Buenos Aires'in Montserrat mahallesindeki 20. yüzyıl tabela ve tipografilerinden esinlenmiştir."
+  },
+
+
+  /* 09 */
+
+  {
+    name: "Playfair Display",
+
+    family:
+      "'Playfair Display', serif",
+
+    type:
+      "Display Serif",
+
+    detail:
+      "Yüksek kalınlık kontrastı ve zarif serifleriyle 18. yüzyıl sonu geçiş dönemi tipografisini çağrıştırır."
+  },
+
+
+  /* 10 */
+
+  {
+    name: "Oswald",
+
+    family:
+      "'Oswald', sans-serif",
+
+    type:
+      "Condensed Sans-serif",
+
+    detail:
+      "Klasik Alternate Gothic tarzının dijital ekranlara uyarlanmış modern yorumudur. Harfleri belirgin biçimde dardır."
+  },
+
+
+  /* 11 */
+
+  {
+    name: "Lato",
+
+    family:
+      "'Lato', sans-serif",
+
+    type:
+      "Humanist Sans-serif",
+
+    detail:
+      "2010'da Łukasz Dziedzic tarafından tasarlandı. Profesyonel görünüm ile sıcak ve dostane karakter arasında denge kurar."
+  },
+
+
+  /* 12 */
+
+  {
+    name: "Fira Mono",
+
+    family:
+      "'Fira Mono', monospace",
+
+    type:
+      "Monospace",
+
+    detail:
+      "Mozilla'nın Firefox OS projesi için geliştirilen Fira ailesinin eş aralıklı versiyonudur."
+  },
+
+
+  /* 13 */
+
+  {
+    name: "Poppins",
+
+    family:
+      "'Poppins', sans-serif",
+
+    type:
+      "Geometrik Sans-serif",
+
+    detail:
+      "Geometrik dairelerden güçlü biçimde yararlanan modern bir sans-serif'tir. Özellikle dijital marka kimliklerinde sık görülür."
+  },
+
+
+  /* 14 */
+
+  {
+    name: "Raleway",
+
+    family:
+      "'Raleway', sans-serif",
+
+    type:
+      "Geometrik Sans-serif",
+
+    detail:
+      "İlk olarak tek bir ince ağırlıkta tasarlandı. Zarif harf yapısı nedeniyle başlık ve marka tasarımlarında sık kullanılır."
+  },
+
+
+  /* 15 */
+
+  {
+    name: "Open Sans",
+
+    family:
+      "'Open Sans', sans-serif",
+
+    type:
+      "Humanist Sans-serif",
+
+    detail:
+      "Steve Matteson tarafından tasarlandı. Açık formları ve yüksek okunabilirliği nedeniyle web arayüzlerinde yaygın olarak kullanılır."
+  },
+
+
+  /* 16 */
+
+  {
+    name: "Bebas Neue",
+
+    family:
+      "'Bebas Neue', sans-serif",
+
+    type:
+      "Condensed Display Sans-serif",
+
+    detail:
+      "Uzun, dar ve tamamı büyük harf hissi veren karakteriyle poster, afiş ve güçlü başlıklarda sık tercih edilir."
+  },
+
+
+  /* 17 */
+
+  {
+    name: "Merriweather",
+
+    family:
+      "'Merriweather', serif",
+
+    type:
+      "Serif",
+
+    detail:
+      "Özellikle ekran üzerinde uzun metinlerin rahat okunabilmesi amacıyla tasarlanmış çağdaş bir serif yazı karakteridir."
+  },
+
+
+  /* 18 */
+
+  {
+    name: "Libre Baskerville",
+
+    family:
+      "'Libre Baskerville', serif",
+
+    type:
+      "Transitional Serif",
+
+    detail:
+      "18. yüzyıl Baskerville tipografisinin web için optimize edilmiş modern yorumlarından biridir."
+  },
+
+
+  /* 19 */
+
+  {
+    name: "Roboto Slab",
+
+    family:
+      "'Roboto Slab', serif",
+
+    type:
+      "Slab Serif",
+
+    detail:
+      "Roboto ailesinin kalın ve blok görünümlü seriflere sahip üyesidir. Dijital ekranlar için geliştirilmiştir."
+  },
+
+
+  /* 20 */
+
+  {
+    name: "Ubuntu",
+
+    family:
+      "'Ubuntu', sans-serif",
+
+    type:
+      "Humanist Sans-serif",
+
+    detail:
+      "Ubuntu işletim sisteminin görsel kimliği için geliştirildi. Yuvarlak ve karakteristik harf formlarına sahiptir."
+  },
+
+
+  /* 21 */
+
+  {
+    name: "DM Sans",
+
+    family:
+      "'DM Sans', sans-serif",
+
+    type:
+      "Geometrik Sans-serif",
+
+    detail:
+      "Düşük kontrastlı geometrik yapısı ve temiz ekran görünümü nedeniyle modern dijital arayüzlerde sık kullanılır."
+  },
+
+
+  /* 22 */
+
+  {
+    name: "Space Mono",
+
+    family:
+      "'Space Mono', monospace",
+
+    type:
+      "Monospace",
+
+    detail:
+      "Geometrik ve retro-fütüristik karakteriyle klasik monospace yazı tiplerinden daha deneysel bir görünüme sahiptir."
+  },
+
+
+  /* 23 */
+
+  {
+    name: "Nunito",
+
+    family:
+      "'Nunito', sans-serif",
+
+    type:
+      "Rounded Sans-serif",
+
+    detail:
+      "Yuvarlatılmış terminalleri ve yumuşak geometrik yapısı sayesinde samimi ve modern bir görünüme sahiptir."
+  },
+
+
+  /* 24 */
+
+  {
+    name: "Source Sans 3",
+
+    family:
+      "'Source Sans 3', sans-serif",
+
+    type:
+      "Humanist Sans-serif",
+
+    detail:
+      "Adobe'un ilk açık kaynak yazı tipi ailesinin güncel versiyonudur. Kullanıcı arayüzleri için yüksek okunabilirlik sunar."
+  },
+
+
+  /* 25 */
+
+  {
+    name: "Abril Fatface",
+
+    family:
+      "'Abril Fatface', serif",
+
+    type:
+      "Display Serif",
+
+    detail:
+      "19. yüzyıl reklam afişlerindeki ağır başlık karakterlerinden esinlenmiştir. Çok yüksek kalınlık kontrastına sahiptir."
+  },
+
+
+  /* 26 */
+
+  {
+    name: "Lobster",
+
+    family:
+      "'Lobster', cursive",
+
+    type:
+      "Script / Display",
+
+    detail:
+      "Birbirine bağlanan harfleri ve retro el yazısı karakteriyle özellikle logo ve dekoratif başlıklarda tanınır."
+  },
+
+
+  /* 27 */
+
+  {
+    name: "Pacifico",
+
+    family:
+      "'Pacifico', cursive",
+
+    type:
+      "Script",
+
+    detail:
+      "1950'lerin Amerikan surf kültürünü çağrıştıran rahat, akıcı ve el yazısı benzeri bir karaktere sahiptir."
+  },
+
+
+  /* 28 */
+
+  {
+    name: "Cinzel",
+
+    family:
+      "'Cinzel', serif",
+
+    type:
+      "Display Serif",
+
+    detail:
+      "Roma dönemi taş yazıtlarından ve klasik büyük harf oranlarından esinlenen görkemli bir yazı karakteridir."
+  },
+
+
+  /* 29 */
+
+  {
+    name: "Caveat",
+
+    family:
+      "'Caveat', cursive",
+
+    type:
+      "Handwriting",
+
+    detail:
+      "Doğal kalem hareketlerini taklit eden, kişisel not ve el yazısı hissi veren rahat bir yazı karakteridir."
+  },
+
+
+  /* 30 */
+
+  {
+    name: "Bungee",
+
+    family:
+      "'Bungee', sans-serif",
+
+    type:
+      "Display Sans-serif",
+
+    detail:
+      "Kentsel tabela ve dikey yönlendirme sistemlerinden esinlenen, oldukça kalın ve sıra dışı bir display fontudur."
+  }
+
+];
+
+
+/* =====================================================
+   ÖRNEK METİNLER
+===================================================== */
+
+const sampleTexts = [
+
+  "Font Dedektifi Görev Başında",
+
+  "The quick brown fox jumps over the lazy dog",
+
+  "Tipografi detaylarda gizlidir.",
+
+  "Aa Bb Gg Rr — Şüpheliyi Bul",
+
+  "Good design starts with type.",
+
+  "Harflerin karakterini okuyabilir misin?",
+
+  "Design is intelligence made visible.",
+
+  "Aa Ee Gg Kk Rr Qq 123456",
+
+  "Her harfin bir ipucu vardır.",
+
+  "Type tells a story."
+
+];
+
+
+/* =====================================================
+   OYUN DEĞİŞKENLERİ
+===================================================== */
+
+let gameFonts = [];
+
+let currentFont = null;
+
+let score = 0;
+
+let lives = MAX_LIVES;
+
+let round = 1;
+
+let answered = false;
+
+let correctAnswers = 0;
+
+let wrongAnswers = 0;
+
+
+/* =====================================================
+   DOM
+===================================================== */
+
+const scoreEl =
+  document.getElementById(
+    "score"
+  );
+
+
+const livesEl =
+  document.getElementById(
+    "lives"
+  );
+
+
+const roundEl =
+  document.getElementById(
+    "round"
+  );
+
+
+const sampleTextEl =
+  document.getElementById(
+    "sampleText"
+  );
+
+
+const alphabetEl =
+  document.getElementById(
+    "alphabet"
+  );
+
+
+const optionsEl =
+  document.getElementById(
+    "options"
+  );
+
+
+const feedbackEl =
+  document.getElementById(
+    "feedback"
+  );
+
+
+const progressEl =
+  document.getElementById(
+    "progress"
+  );
+
+
+const progressTextEl =
+  document.getElementById(
+    "progressText"
+  );
+
+
+const gameScreen =
+  document.getElementById(
+    "gameScreen"
+  );
+
+
+const gameOverScreen =
+  document.getElementById(
+    "gameOver"
+  );
+
+
+const finalScoreEl =
+  document.getElementById(
+    "finalScore"
+  );
+
+
+const correctResultEl =
+  document.getElementById(
+    "correctResult"
+  );
+
+
+const wrongResultEl =
+  document.getElementById(
+    "wrongResult"
+  );
+
+
+const accuracyResultEl =
+  document.getElementById(
+    "accuracyResult"
+  );
+
+
+const resultTitleEl =
+  document.getElementById(
+    "resultTitle"
+  );
+
+
+const resultMessageEl =
+  document.getElementById(
+    "resultMessage"
+  );
+
+
+const resultIconEl =
+  document.getElementById(
+    "resultIcon"
+  );
+
+
+const hintButtons =
+  document.querySelectorAll(
+    ".hint"
+  );
+
+
+/* =====================================================
+   SHUFFLE
+===================================================== */
+
+function shuffle(array) {
+
+  const copy = [...array];
+
+
+  for (
+    let i = copy.length - 1;
+    i > 0;
+    i--
+  ) {
+
+    const j =
+      Math.floor(
+        Math.random() *
+        (i + 1)
+      );
+
+
+    [
+      copy[i],
+      copy[j]
+    ] = [
+      copy[j],
+      copy[i]
+    ];
+
+  }
+
+
+  return copy;
+
+}
+
+
+/* =====================================================
+   10 FARKLI FONT SEÇ
+===================================================== */
+
+function createGameFontPool() {
+
+  gameFonts =
+    shuffle(fonts)
+      .slice(
+        0,
+        TOTAL_QUESTIONS
+      );
+
+}
+
+
+/* =====================================================
+   YENİ SORU
+===================================================== */
+
+function newRound() {
+
+  answered = false;
+
+
+  currentFont =
+    gameFonts[
+      round - 1
+    ];
+
+
+  roundEl.textContent =
+    `Font Dosyası #${String(round).padStart(2, "0")}`;
+
+
+  progressTextEl.textContent =
+    `${round} / ${TOTAL_QUESTIONS}`;
+
+
+  progressEl.style.width =
+    `${(round / TOTAL_QUESTIONS) * 100}%`;
+
+
+  const randomText =
+    sampleTexts[
+      Math.floor(
+        Math.random() *
+        sampleTexts.length
+      )
+    ];
+
+
+  sampleTextEl.style.opacity =
+    "0";
+
+
+  setTimeout(() => {
+
+    sampleTextEl.textContent =
+      randomText;
+
+
+    sampleTextEl.style.fontFamily =
+      currentFont.family;
+
+
+    alphabetEl.style.fontFamily =
+      currentFont.family;
+
+
+    sampleTextEl.style.opacity =
+      "1";
+
+  }, 150);
+
+
+  feedbackEl.textContent =
+    "";
+
+
+  feedbackEl.className =
+    "feedback";
+
+
+  resetHints();
+
+
+  renderOptions();
+
+}
+
+
+/* =====================================================
+   HINT RESET
+===================================================== */
+
+function resetHints() {
+
+  const defaults = [
+
+    "Font ailesini göster",
+
+    "Tasarım detayını göster"
+
+  ];
+
+
+  hintButtons.forEach(
+
+    (button, index) => {
+
+      button.disabled =
+        false;
+
+
+      button.classList.remove(
+        "revealed"
+      );
+
+
+      button
+        .querySelector(
+          ".hint-text"
+        )
+        .textContent =
+        defaults[index];
+
+    }
+
+  );
+
+}
+
+
+/* =====================================================
+   ŞIKLARI OLUŞTUR
+===================================================== */
+
+function generateOptions() {
+
+  const wrongFonts =
+    shuffle(
+
+      fonts.filter(
+
+        font =>
+          font.name !==
+          currentFont.name
+
+      )
+
+    ).slice(0, 3);
+
+
+  return shuffle([
+
+    currentFont,
+
+    ...wrongFonts
+
+  ]);
+
+}
+
+
+/* =====================================================
+   ŞIKLARI EKRANA BAS
+===================================================== */
+
+function renderOptions() {
+
+  optionsEl.innerHTML =
+    "";
+
+
+  const options =
+    generateOptions();
+
+
+  options.forEach(font => {
+
+    const button =
+      document.createElement(
+        "button"
+      );
+
+
+    button.className =
+      "option";
+
+
+    button.textContent =
+      font.name;
+
+
+    button.addEventListener(
+      "click",
+      () => {
+
+        checkAnswer(
+          button,
+          font
+        );
+
+      }
+    );
+
+
+    optionsEl.appendChild(
+      button
+    );
+
+  });
+
+}
+
+
+/* =====================================================
+   CEVAP KONTROLÜ
+===================================================== */
+
+function checkAnswer(
+  button,
+  selectedFont
+) {
+
+  if (answered) {
+    return;
+  }
+
+
+  /* ===================================================
+     DOĞRU CEVAP
+  =================================================== */
+
+  if (
+    selectedFont.name ===
+    currentFont.name
+  ) {
+
+    answered = true;
+
+
+    button.classList.add(
+      "correct"
+    );
+
+
+    score += 100;
+
+    correctAnswers++;
+
+
+    scoreEl.textContent =
+      score;
+
+
+    feedbackEl.textContent =
+      `✓ Tebrikler! Doğru cevap: ${currentFont.name}`;
+
+
+    feedbackEl.className =
+      "feedback success";
+
+
+    disableOptions();
+
+
+    /*
+    10. soruysa oyun biter.
+    */
+
+    if (
+      round >=
+      TOTAL_QUESTIONS
+    ) {
+
+      progressEl.style.width =
+        "100%";
+
+
+      setTimeout(
+        () => endGame(false),
+        1400
+      );
+
+    }
+
+    else {
+
+      setTimeout(
+        () => {
+
+          round++;
+
+          newRound();
+
+        },
+        1400
+      );
+
+    }
+
+  }
+
+
+  /* ===================================================
+     YANLIŞ CEVAP
+  =================================================== */
+
+  else {
+
+    button.classList.add(
+      "wrong"
+    );
+
+
+    button.disabled =
+      true;
+
+
+    lives--;
+
+    wrongAnswers++;
+
+
+    updateLives();
+
+
+    feedbackEl.textContent =
+      "Yanlış şüpheli. Bir kez daha incele.";
+
+
+    feedbackEl.className =
+      "feedback error";
+
+
+    /*
+    Can bittiyse oyun biter.
+    */
+
+    if (
+      lives <= 0
+    ) {
+
+      answered = true;
+
+
+      revealCorrectAnswer();
+
+
+      feedbackEl.textContent =
+        `Doğru cevap: ${currentFont.name}`;
+
+
+      setTimeout(
+        () => endGame(true),
+        1200
+      );
+
+    }
+
+  }
+
+}
+
+
+/* =====================================================
+   ŞIKLARI KİLİTLE
+===================================================== */
+
+function disableOptions() {
+
+  document
+    .querySelectorAll(
+      ".option"
+    )
+    .forEach(
+      button => {
+
+        button.disabled =
+          true;
+
+      }
+    );
+
+}
+
+
+/* =====================================================
+   DOĞRU CEVABI GÖSTER
+===================================================== */
+
+function revealCorrectAnswer() {
+
+  document
+    .querySelectorAll(
+      ".option"
+    )
+    .forEach(
+      button => {
+
+        if (
+          button.textContent ===
+          currentFont.name
+        ) {
+
+          button.classList.add(
+            "correct"
+          );
+
+        }
+
+
+        button.disabled =
+          true;
+
+      }
+    );
+
+}
+
+
+/* =====================================================
+   CANLAR
+===================================================== */
+
+function updateLives() {
+
+  const full =
+    "♥ ".repeat(
+      Math.max(lives, 0)
+    );
+
+
+  const empty =
+    "♡ ".repeat(
+      MAX_LIVES -
+      Math.max(lives, 0)
+    );
+
+
+  livesEl.textContent =
+    full + empty;
+
+}
+
+
+/* =====================================================
+   İPUCU SİSTEMİ
+===================================================== */
+
+hintButtons.forEach(
+  button => {
+
+    button.addEventListener(
+      "click",
+      () => {
+
+        const index =
+          Number(
+            button.dataset.hint
+          );
+
+
+        let hint = "";
+
+
+        /*
+        İPUCU 1
+        */
+
+        if (
+          index === 0
+        ) {
+
+          hint =
+            currentFont.type;
+
+        }
+
+
+        /*
+        İPUCU 2
+        */
+
+        if (
+          index === 1
+        ) {
+
+          hint =
+            currentFont.detail;
+
+        }
+
+
+        button
+          .querySelector(
+            ".hint-text"
+          )
+          .textContent =
+          hint;
+
+
+        button.classList.add(
+          "revealed"
+        );
+
+
+        button.disabled =
+          true;
+
+      }
+    );
+
+  }
+);
+
+
+/* =====================================================
+   SONUÇ MESAJI
+===================================================== */
+
+function getResultContent(
+  accuracy,
+  lostByLives
+) {
+
+  if (lostByLives) {
+
+    return {
+
+      icon:
+        "🔎",
+
+      title:
+        "Dosya Kapandı.",
+
+      message:
+        "Üç yanlış tahmin hakkını kullandın. Font arşivini biraz daha inceleyip yeni bir dosya açabilirsin."
+
+    };
+
+  }
+
+
+  if (
+    accuracy === 100
+  ) {
+
+    return {
+
+      icon:
+        "🏆",
+
+      title:
+        "Font Ustası!",
+
+      message:
+        "10 dosyanın tamamını çözdün. Tipografi gözünden hiçbir detay kaçmıyor."
+
+    };
+
+  }
+
+
+  if (
+    accuracy >= 80
+  ) {
+
+    return {
+
+      icon:
+        "🔎",
+
+      title:
+        "Usta Dedektif",
+
+      message:
+        "Oldukça güçlü bir tipografi gözün var. Fontları küçük karakteristiklerinden ayırt edebiliyorsun."
+
+    };
+
+  }
+
+
+  if (
+    accuracy >= 60
+  ) {
+
+    return {
+
+      icon:
+        "Aa",
+
+      title:
+        "İyi İş Çıkardın",
+
+      message:
+        "Font dosyalarının çoğunu çözdün. Birkaç küçük anatomik detaya daha dikkat etmen yeterli."
+
+    };
+
+  }
+
+
+  return {
+
+    icon:
+      "👀",
+
+    title:
+      "Bir Tur Daha?",
+
+    message:
+      "Bazı fontlar seni kandırmayı başardı. Arşivde 30 farklı şüpheli var; yeni turda tamamen farklı fontlarla karşılaşabilirsin."
+
+  };
+
+}
+
+
+/* =====================================================
+   OYUNU BİTİR
+===================================================== */
+
+function endGame(
+  lostByLives = false
+) {
+
+  gameScreen.classList.add(
+    "hidden"
+  );
+
+
+  gameOverScreen.classList.add(
+    "active"
+  );
+
+
+  /*
+  Başarı oranı doğru çözülen
+  soru sayısına göre hesaplanır.
+  */
+
+  const questionsPlayed =
+    lostByLives
+      ? round
+      : TOTAL_QUESTIONS;
+
+
+  const accuracy =
+    questionsPlayed > 0
+
+      ? Math.round(
+          (
+            correctAnswers /
+            questionsPlayed
+          ) * 100
+        )
+
+      : 0;
+
+
+  const content =
+    getResultContent(
+      accuracy,
+      lostByLives
+    );
+
+
+  finalScoreEl.textContent =
+    score;
+
+
+  correctResultEl.textContent =
+    correctAnswers;
+
+
+  wrongResultEl.textContent =
+    wrongAnswers;
+
+
+  accuracyResultEl.textContent =
+    `%${accuracy}`;
+
+
+  resultIconEl.textContent =
+    content.icon;
+
+
+  resultTitleEl.textContent =
+    content.title;
+
+
+  resultMessageEl.textContent =
+    content.message;
+
+}
+
+
+/* =====================================================
+   RESTART
+===================================================== */
+
+document
+  .getElementById(
+    "restart"
+  )
+  .addEventListener(
+    "click",
+    restartGame
+  );
+
+
+function restartGame() {
+
+  score =
+    0;
+
+
+  lives =
+    MAX_LIVES;
+
+
+  round =
+    1;
+
+
+  answered =
+    false;
+
+
+  correctAnswers =
+    0;
+
+
+  wrongAnswers =
+    0;
+
+
+  scoreEl.textContent =
+    "0";
+
+
+  updateLives();
+
+
+  /*
+  Yeni oyunda 30 fonttan
+  yeniden rastgele 10 font seç.
+  */
+
+  createGameFontPool();
+
+
+  gameOverScreen
+    .classList.remove(
+      "active"
+    );
+
+
+  gameScreen
+    .classList.remove(
+      "hidden"
+    );
+
+
+  newRound();
+
+}
+
+
+/* =====================================================
+   START GAME
+===================================================== */
+
+createGameFontPool();
+
+updateLives();
+
+newRound();
+
+</script>
+
+
+</body>
+</html>
